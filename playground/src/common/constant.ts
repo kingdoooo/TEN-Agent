@@ -90,6 +90,10 @@ export const LANG_OPTIONS = [
   {
     label: "Hindi",
     value: "hi-IN"
+  },
+  {
+    label: "Spanish (Mexico)",
+    value: "es-MX"
   }
 ]
 export const VOICE_OPTIONS = [

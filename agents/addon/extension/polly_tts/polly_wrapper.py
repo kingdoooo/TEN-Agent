@@ -21,6 +21,8 @@ VOICE_ENGINE_MAP = {
     "Seoyeon": [ENGINE_NEURAL, ENGINE_STANDARD],
     "Kajal": [ENGINE_NEURAL],
     "Hiujin": [ENGINE_NEURAL],
+    "Andres": [ENGINE_NEURAL, ENGINE_STANDARD],
+    "Mia": [ENGINE_NEURAL, ENGINE_STANDARD],
 }
 
 VOICE_LANG_MAP = {
@@ -34,6 +36,8 @@ VOICE_LANG_MAP = {
     "Seoyeon": ['ko-KR'],
     "Kajal": ['hi-IN'],
     "Hiujin": ['yue-CN'],
+    "Andres": ['es-MX'],
+    "Mia": ['es-MX'],
 }
 
 LANGCODE_MAP = {
@@ -47,6 +51,7 @@ LANGCODE_MAP = {
     'zh-HK': 'yue-CN', # map zh-hk to yue-cn
     'zh-TW': 'yue-CN', # map zh-tw to yue-cn
     'yue-CN': 'yue-CN',
+    'es-MX': 'es-MX',
 }
 
 # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/polly/client/synthesize_speech.html
