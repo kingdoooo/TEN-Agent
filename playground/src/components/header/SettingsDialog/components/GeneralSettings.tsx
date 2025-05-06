@@ -1,4 +1,4 @@
-import { Select, Checkbox, Input } from "antd"
+import { Select, Checkbox, Input, message } from "antd"
 import { InfoCircleOutlined, WarningFilled } from "@ant-design/icons"
 import {
     LANG_OPTIONS,
@@ -76,6 +76,19 @@ const GeneralSettings = ({ settings, dispatch, agentConnected }: GeneralSettings
                         if (settings.mode === "chat") {
                             payload.outputLanguage = v;
                         }
+                        
+                        // Show notification about language change
+                        if (settings.mode === "translate") {
+                            message.info(`Input language changed to ${LANG_OPTIONS.find(l => l.value === v)?.label}. You'll need to reconnect for this to take effect.`);
+                        }
+                        
+                        // Log language change for debugging
+                        console.log("Language changed:", {
+                            newLanguage: v,
+                            mode: settings.mode,
+                            previousLanguage: settings.lang
+                        });
+                        
                         dispatch({ type: 'SET_GENERAL', payload })
                     }}
                 />
@@ -90,7 +103,18 @@ const GeneralSettings = ({ settings, dispatch, agentConnected }: GeneralSettings
                             className={`${styles.select} dark`}
                             value={settings.outputLanguage}
                             options={LANG_OPTIONS}
-                            onChange={v => dispatch({ type: 'SET_GENERAL', payload: { outputLanguage: v } })}
+                            onChange={v => {
+                                // Log output language change for debugging
+                                console.log("Output language changed:", {
+                                    newLanguage: v,
+                                    previousLanguage: settings.outputLanguage
+                                });
+                                
+                                // Show notification about language change
+                                message.info(`Output language changed to ${LANG_OPTIONS.find(l => l.value === v)?.label}. You'll need to reconnect for this to take effect.`);
+                                
+                                dispatch({ type: 'SET_GENERAL', payload: { outputLanguage: v } })
+                            }}
                         />
                     </div>
 

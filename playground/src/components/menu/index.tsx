@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import styles from "./index.module.scss"
 
 interface MenuProps {
@@ -21,6 +21,19 @@ const DEFAULT_MENU_LIST: MenuItem[] = [{
 const Menu = (props: MenuProps) => {
   const { onChange } = props
   const [menuList, setMenuList] = useState(DEFAULT_MENU_LIST)
+
+  // Listen for settings changes to sync UI state
+  useEffect(() => {
+    const handleSettingsChange = (e: CustomEvent<any>) => {
+      const settings = e.detail
+      console.log("Menu received settings change:", settings)
+    }
+
+    window.addEventListener('astra-settings-changed', handleSettingsChange as EventListener)
+    return () => {
+      window.removeEventListener('astra-settings-changed', handleSettingsChange as EventListener)
+    }
+  }, [])
 
   const onClickItem = (index: number) => {
     if (menuList[index].active) {

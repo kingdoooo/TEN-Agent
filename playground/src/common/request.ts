@@ -1,4 +1,4 @@
-import { REQUEST_URL } from "./constant"
+import { REQUEST_URL, LANG_OPTIONS } from "./constant"
 import { genUUID } from "./utils"
 
 interface StartRequestConfig {
@@ -60,9 +60,34 @@ export const apiStartService = async (config: StartRequestConfig): Promise<any> 
     mcpModel,
     maxMemoryLength,
   } = config
+  
+  // Find the appropriate transcribe code for the selected language
+  const selectedLang = LANG_OPTIONS.find(lang => lang.value === language);
+  const transcribeCode = selectedLang?.transcribeCode || language;
+  
+  // Special handling for Spanish (Mexico) in translation mode
+  let effectiveTranscribeCode = transcribeCode;
+  if (language === "es-MX" && mode === "translate") {
+    console.log("Using special handling for Spanish (Mexico) in translation mode");
+    effectiveTranscribeCode = "es-US"; // Ensure we use es-US for AWS Transcribe
+  }
+  
+  // Log the full configuration being sent to the server
+  console.log("Starting service with configuration:", {
+    language,
+    transcribeCode: effectiveTranscribeCode,
+    graphName,
+    mode,
+    outputLanguage,
+    partialStabilization
+  });
+  
   const data = {
     request_id: genUUID(),
     agora_asr_language: language,
+    transcribe_asr_language: effectiveTranscribeCode, // Use the effective transcribe code
+    asr_lang_code: effectiveTranscribeCode, // Use the effective transcribe code
+    lang_code: effectiveTranscribeCode, // Additional parameter for AWS Transcribe
     channel_name: channel,
     openai_proxy_url: "",
     remote_stream_id: userId,
@@ -77,6 +102,7 @@ export const apiStartService = async (config: StartRequestConfig): Promise<any> 
     mcp_api_base: mcpApiBase || "",
     mcp_api_key: mcpApiKey || "",
     mcp_model: mcpModel || "",
+    update_asr_language: true, // Flag to indicate ASR language should be updated
   }
   let resp: any = await fetch(url, {
     method: "POST",

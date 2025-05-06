@@ -10,7 +10,7 @@ import {
 } from "@/common"
 import { setAgentConnected } from "@/store/reducers/global"
 import { LoadingOutlined } from "@ant-design/icons"
-import { Modal } from "antd"
+import { Modal, message } from "antd"
 import styles from "./index.module.scss"
 
 let intervalId: any
@@ -88,6 +88,28 @@ const ConnectButton = () => {
             dispatch(setAgentConnected(false))
             stopPing()
         } else {
+            // Log the language settings for debugging
+            console.log("Connecting with language settings:", {
+                inputLanguage: lang,
+                outputLanguage: outputLanguage,
+                mode: mode
+            })
+            
+            // Find the appropriate language settings based on the selected language
+            const selectedLangOption = LANG_OPTIONS.find(option => option.value === lang);
+            
+            if (!selectedLangOption) {
+                Modal.error({
+                    title: "Language Error",
+                    content: `Selected language "${lang}" is not supported.`
+                });
+                setLoading(false);
+                return;
+            }
+            
+            // Show a notification about the language being used
+            message.info(`Connecting with input language: ${selectedLangOption.label}`);
+            
             const res = await apiStartService({
                 channel,
                 userId,

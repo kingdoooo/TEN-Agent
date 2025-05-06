@@ -69,31 +69,38 @@ export const GRAPH_NAME_OPTIONS = [
 export const LANG_OPTIONS = [
   {
     label: "English",
-    value: "en-US"
+    value: "en-US",
+    transcribeCode: "en-US" // Explicit mapping for AWS Transcribe
   },
   {
     label: "Chinese Simplified",
-    value: "zh-CN"
+    value: "zh-CN",
+    transcribeCode: "zh-CN"
   },
   {
     label: "Chinese Traditional",
-    value: "zh-TW"
+    value: "zh-TW",
+    transcribeCode: "zh-TW"
   },
   {
     label: "Japanese",
-    value: "ja-JP"
+    value: "ja-JP",
+    transcribeCode: "ja-JP"
   },
   {
     label: "French",
-    value: "fr-FR"
+    value: "fr-FR",
+    transcribeCode: "fr-FR"
   },
   {
     label: "Hindi",
-    value: "hi-IN"
+    value: "hi-IN",
+    transcribeCode: "hi-IN"
   },
   {
     label: "Spanish (Mexico)",
-    value: "es-MX"
+    value: "es-MX",
+    transcribeCode: "es-US" // Using es-US for AWS Transcribe as it might not support es-MX specifically
   }
 ]
 export const VOICE_OPTIONS = [
