@@ -98,9 +98,9 @@ export const LANG_OPTIONS = [
     transcribeCode: "hi-IN"
   },
   {
-    label: "Spanish (Mexico)",
-    value: "es-MX",
-    transcribeCode: "es-US" // Using es-US for AWS Transcribe as it might not support es-MX specifically
+    label: "Spanish (US)",
+    value: "es-US",
+    transcribeCode: "es-US"
   }
 ]
 export const VOICE_OPTIONS = [
@@ -133,4 +133,3 @@ export const COLOR_LIST: ColorItem[] = [{
   active: "#E225B2",
   default: "#371530"
 }]
-
